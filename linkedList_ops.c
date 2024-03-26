@@ -1,6 +1,6 @@
 #include "monty.h"
 /**
- * add_node - adds data into a linked list
+ * add_node - adds data to the beginning of a linked list
  * @head: head node of the linked list
  * @data: data to be inserted
  *
@@ -28,6 +28,39 @@ stack_t *add_node(stack_t **head, int data)
 		(*head)->prev = new_node;
 		new_node->next = *head;
 		*head = new_node;
+	}
+	return (new_node);
+}
+
+/**
+ * add_nodeint_end - function that adds a new node at the end of a list.
+ * @head: pointer to first node.
+ * @data: given int to be added.
+ * Return: the address of the new element
+ */
+stack_t *add_nodeint_end(stack_t **head, int data)
+{
+	stack_t *new_node;
+	stack_t *temp;
+
+	new_node = malloc(sizeof(stack_t));
+	if (new_node == NULL)
+		return (NULL);
+	new_node->n = data;
+	new_node->next = NULL;
+
+	if (*head == NULL)
+	{
+		*head = new_node;
+		new_node->prev = NULL;
+	}
+	else
+	{
+		temp = *head;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new_node;
+		new_node->prev = temp;
 	}
 	return (new_node);
 }

@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <stdbool.h>
 #include <stdio.h>
 /**
  * execute_cmd - execute commands
@@ -19,7 +20,8 @@ void execute_cmd(stack_t **stack, char **cmd, unsigned int line_no,
 		{"pop", pop}, {"swap", swap}, {"add", add},
 		{"nop", nop}, {"sub", sub}, {"div", divi},
 		{"mul", mul}, {"mod", mod}, {"pchar", pchar},
-		{"pstr", pstr}, {NULL, NULL}
+		{"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
+		{"stack", stack_mode}, {"queue", queue_mode}, {NULL, NULL}
 	};
 	(void)lineptr;
 
@@ -40,7 +42,6 @@ void execute_cmd(stack_t **stack, char **cmd, unsigned int line_no,
 					break;
 				}
 			}
-
 			if (instructions[i].opcode == NULL)
 			{
 				fprintf(stderr, "L%d: unknown instruction %s\n", line_no, cmd[0]);
@@ -66,7 +67,10 @@ void push(stack_t **stack, unsigned int line_number)
 
 	if (arg != NULL && str_to_int(arg, &value))
 	{
-		add_node(stack, value);
+		if (var.mode == false)
+			add_nodeint_end(stack, value);
+		else
+			add_node(stack, value);
 	}
 	else
 	{

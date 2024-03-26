@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdbool.h>
 #define READSIZE 1024
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -41,6 +42,7 @@ typedef struct instruction_s
  * @fd: file containing monty codes
  * @line: line pointer
  * @cmd: command list
+ * @mode: stack or queue mode
  *
  * Description: function to be used in other sources files
  */
@@ -49,6 +51,7 @@ typedef struct var_s
 	FILE *fd;
 	char *line;
 	char **cmd;
+	bool mode;
 } var_t;
 extern var_t var;
 char *str_dup(char *str);
@@ -65,6 +68,7 @@ char *cmdline_dup(char *lineptr, ssize_t chars_read);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 /*linked list operations*/
 stack_t *add_node(stack_t **head, int data);
+stack_t *add_nodeint_end(stack_t **head, int data);
 size_t display(stack_t *head);
 int delete_node(stack_t **head);
 size_t node_len(stack_t *head);
@@ -84,5 +88,9 @@ void mul(stack_t **stack, unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
 void pchar(stack_t **stack, unsigned int line_number);
 void pstr(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
+void rotr(stack_t **stack, unsigned int line_number);
+void stack_mode(stack_t **stack, unsigned int line_number);
+void queue_mode(stack_t **stack, unsigned int line_number);
 
 #endif /*MONTY_H*/

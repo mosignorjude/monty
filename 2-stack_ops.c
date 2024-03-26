@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <stdlib.h>
 /**
  * mul - multiply top element of a stack
  * @stack: stack
@@ -134,5 +135,37 @@ void pstr(stack_t **stack, unsigned int line_number)
 		buffer[index] = '\0';
 		printf("%s\n", buffer);
 		free(buffer);
+	}
+}
+/**
+ * rotl - rotates the stack to the top
+ * @stack: stack
+ * @line_number: line number of the code
+ *
+ * Return: void
+ */
+void rotl(stack_t **stack, unsigned int line_number)
+{
+	stack_t *stack_ptr, *next;
+	int top;
+	(void)line_number;
+	stack_ptr = *stack;
+
+	if (stack_ptr == NULL)
+	{
+		fclose(var.fd);
+		multi_free(var.cmd);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		top = stack_ptr->n;
+		while (stack_ptr->next != NULL)
+		{
+			next = stack_ptr->next;
+			stack_ptr->n = next->n;
+			stack_ptr = stack_ptr->next;
+		}
+		stack_ptr->n = top;
 	}
 }

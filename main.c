@@ -1,5 +1,6 @@
 #include "monty.h"
-var_t var = {NULL, NULL, NULL};
+#include <unistd.h>
+var_t var = {NULL, NULL, NULL, true};
 /**
  * main - entry point
  * @ac: argument counter
