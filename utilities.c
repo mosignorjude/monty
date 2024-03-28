@@ -1,5 +1,7 @@
 #include "monty.h"
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
 /**
  * str_dup - Function Duplicates a string
  * @str: The string to duplicate
@@ -49,28 +51,28 @@ void multi_free(char **ptr)
  */
 int str_to_int(char *str, int *result)
 {
-	char ch, minus = '\0';
-	int i, value;
+	char ch;
+	int i, value, sign;
 
+	sign = 1;
+	i = 0;
+	value = 0;
 	if (str == NULL || result == NULL)
 		return (0);
 
-	for (i = 0; str[i] != '\0'; i++)
+	if (str[0] == '-')
 	{
-		if (i == 0 && str[0] == '-')
-			minus = str[0];
-		else
-		{
+		sign = -1;
+		i = 1;
+	}
+	for (; str[i] != '\0'; i++)
+	{
 		ch = str[i];
 		if (!isdigit(ch))
 			return (0);
-		}
+		value = value * 10 + (ch - '0');
 	}
-	value = atoi(str);
-	if (minus)
-		*result = -value;
-	else
-		*result = value;
+	*result = sign * value;
 	return (1);
 }
 /**
