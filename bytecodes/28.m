@@ -1,2 +1,2 @@
-push 10000
+push 0
 pchar
