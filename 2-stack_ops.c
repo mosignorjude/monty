@@ -121,18 +121,22 @@ void pstr(stack_t **stack, unsigned int line_number)
 		printf("\n");
 		fclose(var.fd);
 		multi_free(var.cmd);
-		exit(EXIT_SUCCESS);
+		/* exit(EXIT_SUCCESS); */
 	}
 	else
 	{
-		buffer = malloc(sizeof(char *) * (node_len(stack_ptr) + 1));
-		while (stack_ptr->next != NULL &&
-				(stack_ptr->n > 0 && stack_ptr->n <= 127))
+		buffer = malloc(sizeof(char) * (node_len(stack_ptr) + 1));
+		if (buffer == NULL)
+		{
+			perror("malloc failed");
+			exit(EXIT_FAILURE);
+		}
+		while (stack_ptr != NULL && stack_ptr->n > 0 && stack_ptr->n <= 127)
 		{
 			ch = stack_ptr->n;
 			buffer[index] = ch;
-			stack_ptr = stack_ptr->next;
 			index++;
+			stack_ptr = stack_ptr->next;
 		}
 		buffer[index] = '\0';
 		printf("%s\n", buffer);
